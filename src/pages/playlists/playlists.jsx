@@ -4,6 +4,7 @@ import { PlayListForm } from "../../components/createPlaylistForm/createPlayList
 import { Modal } from "../../components/modal/modal";
 import css from "./playlists.module.css";
 import { useData } from "../../context/dataContext";
+import { useNavigate } from "react-router";
 export const Playlists = () => {
   const { playlistsState, dispatchPlaylist } = useData();
   const [showForm, setShowForm] = useState(false);
@@ -14,14 +15,19 @@ export const Playlists = () => {
 const removePlayList=(id)=>{
     dispatchPlaylist({type:"REMOVE",payload:id});
 }
+const navigate=useNavigate();
+const playlistClick=(e,pID)=>{
+    e.stopPropagation();
+    removePlayList(pID);
+}
   return (
     <div className={css.container}>
       <h1>Playlists</h1>
       <div className={css.list}>
         {playlistsState?.map((playlist) => (
-          <div key={playlist?.pID} className={css.playlistCard}>
+          <div key={playlist?.pID} className={css.playlistCard} onClick={()=>navigate(`/playlists/${playlist?.pID}`)}>
             <p>
-              <span className="material-symbols-outlined"  onClick={()=>removePlayList(playlist?.pID)}>close</span>
+              <span className="material-symbols-outlined"  onClick={(e)=>playlistClick(e,playlist?.pID)}>close</span>
             </p>
             <img src={playlist?.thumbnail} alt="thumbnail" />
             <div>
