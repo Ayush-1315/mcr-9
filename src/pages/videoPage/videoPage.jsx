@@ -16,9 +16,12 @@ export const VideoPage = () => {
     dispatchWatchLater,
     dispatchNotes,
     notesState,
+    playlistsState,
+    dispatchPlaylist
   } = useData();
   const [addNotes, setAddNotes] = useState(false);
-  const [initialData,setInitialData]=useState(null)
+  const [initialData, setInitialData] = useState(null);
+  const [showOptions,setShowOptions]=useState(false);
   const closeNotesModal = () => setAddNotes(false);
   const currentVideo = allVideos?.find(({ _id }) => _id === Number(videoId));
   const clickHandler = (id) => navigate(`/video/${id}`);
@@ -38,19 +41,23 @@ export const VideoPage = () => {
       setAddNotes(false);
     }
   };
-  const onUpdate=data=>{
-    if(data.trim!==""){
+  const onUpdate = (data) => {
+    if (data.trim !== "") {
       dispatchNotes({
-        type:"UPDATE",
-        payload:{_id:currentVideo?._id,nID:initialData,note:data},
-      })
+        type: "UPDATE",
+        payload: { _id: currentVideo?._id, nID: initialData, note: data },
+      });
       setAddNotes(false);
       setInitialData(null);
     }
-  }
+  };
   const currentVideoNotes = notesState?.find(
     ({ _id }) => _id === currentVideo?._id
   );
+const clickHandlerOptions=(pID)=>{
+setShowOptions(false);
+dispatchPlaylist({type:"ADD_TO_PLAYLIST",payload:{pID,video:currentVideo}})
+}
   return (
     <div className={css.container}>
       <div className={css.main}>
@@ -75,7 +82,20 @@ export const VideoPage = () => {
                 <img src={clock} alt="clock" className={css.watchLater} />
               )}
             </span>
-            <span className="material-symbols-outlined">playlist_add</span>
+            <div className={css.playlists}>
+              <span className="material-symbols-outlined" onClick={()=>setShowOptions(prev=>!prev)}>playlist_add</span>
+
+              {showOptions &&<div>
+                {playlistsState.map((playlist) => (
+                  <div key={playlist.pID} onClick={()=>clickHandlerOptions(playlist.pID)}>
+                    <span>{playlist?.data?.title}</span>
+                  </div>
+                ))}
+                <div className={css.createPlaylistBtn} onClick={()=>clickHandlerOptions(null)}>
+                  Create Play List
+                </div>
+              </div>}
+            </div>
             <span
               className="material-symbols-outlined"
               onClick={() => setAddNotes(true)}
@@ -88,11 +108,29 @@ export const VideoPage = () => {
           <h2>My Notes</h2>
           <div>
             {currentVideoNotes?.notes?.map((note) => (
-              <div className={css.note}  key={note?.nID}>
+              <div className={css.note} key={note?.nID}>
                 <p>{note?.note}</p>
                 <div>
-                  <span className="material-symbols-outlined"onClick={()=>{setAddNotes(true);setInitialData(note?.nID)}}>edit</span>
-                  <span className="material-symbols-outlined" onClick={()=>dispatchNotes({type:"DELETE",payload:{_id:currentVideo._id,nID:note?.nID}})}>delete</span>
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => {
+                      setAddNotes(true);
+                      setInitialData(note?.nID);
+                    }}
+                  >
+                    edit
+                  </span>
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() =>
+                      dispatchNotes({
+                        type: "DELETE",
+                        payload: { _id: currentVideo._id, nID: note?.nID },
+                      })
+                    }
+                  >
+                    delete
+                  </span>
                 </div>
               </div>
             ))}
@@ -118,7 +156,13 @@ export const VideoPage = () => {
       {addNotes && (
         <Modal
           onClose={() => closeNotesModal()}
-          component={<NoteForm submitFun={onSubmit} initialData={initialData} onUpdate={onUpdate}/>}
+          component={
+            <NoteForm
+              submitFun={onSubmit}
+              initialData={initialData}
+              onUpdate={onUpdate}
+            />
+          }
         />
       )}
     </div>

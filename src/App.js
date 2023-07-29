@@ -6,6 +6,7 @@ import { Category } from "./pages/categoryPage/category";
 import { VideoPage } from "./pages/videoPage/videoPage";
 import { WatchLaterPage } from "./pages/watchLater/watchLater";
 import { ExplorePage } from "./pages/explore/explore";
+import { Playlists } from "./pages/playlists/playlists";
 function App() {
 document.title="Video Library";
   return (
@@ -17,6 +18,7 @@ document.title="Video Library";
         <Route path="/video/:videoId" element={<VideoPage/>}/>
         <Route path="/watch-later" element={<WatchLaterPage/>}/>
         <Route path="/explore" element={<ExplorePage/>}/>
+        <Route path="/playlists" element={<Playlists/>}/>
       </Routes>
     </div>
   );

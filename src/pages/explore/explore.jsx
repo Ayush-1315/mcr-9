@@ -7,7 +7,6 @@ export const ExplorePage = () => {
   useEffect(() => {
     dispatch({ type: "SEARCH", payload: "" });
   }, [dispatch]);
-  console.log(dataState);
   const changeHandler=(e)=>{
     dispatch({type:"SEARCH",payload:e.target.value})
   }

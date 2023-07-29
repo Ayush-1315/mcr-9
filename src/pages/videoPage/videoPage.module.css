@@ -60,3 +60,28 @@
     cursor: pointer;
     margin: 0 0.5rem;
 }
+.playlists{
+    position: relative;
+}
+.playlists>div{
+    position: absolute;
+    background-color: #ffffff;
+    border:2px solid #000000;
+    min-width: 10rem;
+    transform: translate(-40%,0%);
+    text-align: center;
+    
+    cursor: pointer;
+}
+.playlists>div>div{
+    padding: 0.3rem;
+}
+.playlists>div>div:hover{
+background-color: rgba(189, 189, 189, 0.8);
+}
+.createPlaylistBtn{
+    background-color: #519FCF;
+    padding: 0.5rem;
+    border-radius: 4px;
+    color:#ffffff;
+}

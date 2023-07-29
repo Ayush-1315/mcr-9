@@ -1,0 +1,15 @@
+.form input{
+    display: block;
+    padding:0.5rem;
+    margin: 1rem 0;
+}
+.form button{
+    width: 100%;
+    background-color: #519FCF;
+    font-weight: bolder;
+    cursor: pointer;
+    padding:0.5rem;
+    border:none;
+    color:#ffffff;
+    border-radius: 8px;
+}
