@@ -48,3 +48,7 @@
     width: 3rem;
     border-radius: 50%;
 }
+.watchLater{
+    height: 1.5rem;
+    cursor: pointer;
+}
