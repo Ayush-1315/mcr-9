@@ -5,7 +5,7 @@ import { Sidebar } from "./components/sidebar/sidebar";
 import { Category } from "./pages/categoryPage/category";
 import { VideoPage } from "./pages/videoPage/videoPage";
 function App() {
-
+document.title="Video Library";
   return (
     <div className="App">
       <Sidebar/>

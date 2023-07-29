@@ -12,6 +12,6 @@ export const Category=()=>{
     const {category:pageTitle,showVideos}=dataState;
     return <div className={css.container}>
         <h1>{pageTitle}</h1>
-       <div className={css.videoList}> {showVideos?.map((video,index)=><VideoCard {...video} key={index}/>)}</div>
+       <div className={css.videoList}> {showVideos?.map((video,index)=><VideoCard video={video} key={index}/>)}</div>
     </div>
 }

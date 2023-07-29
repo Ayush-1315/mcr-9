@@ -1,6 +1,7 @@
 .card{
     width: 19rem;
     cursor: pointer;
+    position: relative;
 }
 .card>img{
     width: 100%;
@@ -21,4 +22,15 @@
 .footer{
     display: flex;
     gap: 1rem;
+}
+.clock{
+    height: 1.5rem;
+}
+.watchLaterToggler{
+    position: absolute;
+    top:0;
+    right: 0.7rem;
+    background-color: white;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0 0 0 8px;
 }
