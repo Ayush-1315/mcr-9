@@ -1,0 +1,18 @@
+.container{
+    text-align: left;
+    width: 80%;
+}
+.searchBar{
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+    margin: auto;
+    border:none;
+    outline: none;
+    border-bottom: 2px solid;
+}
+.container>div:last-child{
+    display: flex;
+    flex-wrap: wrap;
+    padding:0.5rem;
+}

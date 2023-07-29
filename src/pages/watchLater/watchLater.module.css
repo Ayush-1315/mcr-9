@@ -1,0 +1,8 @@
+.container{
+    width: 80%;
+    text-align: left;
+}
+.videoList{
+    display: flex;
+    flex-wrap: wrap;
+}

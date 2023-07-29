@@ -17,6 +17,9 @@ export const dataReducer=(state,action)=>{
             category:payload,
             showVideos:state?.allVideos?.filter(({category})=>category.toLowerCase()===payload.toLowerCase())
         }
+        case "SEARCH":return{
+            ...state,showVideos:state?.allVideos?.filter(({title})=>title.toLowerCase().includes(payload.toLowerCase()))
+        }
         default: return state;
     }
 }
