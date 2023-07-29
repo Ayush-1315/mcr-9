@@ -1,0 +1,50 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
+.player{
+    border:2px solid;
+    padding: 1rem;
+    margin: 1rem ;
+}
+.suggestionCard{
+    color:#569ECF;
+    text-align: left;
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    cursor: pointer;
+    font-weight: bolder;
+    width: 25rem;
+}
+.suggestionCard img{
+    height: 7rem;
+    width:12rem;
+    
+}
+.info{
+    border-bottom: 2px solid grey;
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+.info>div:first-child{
+    display: flex;
+    align-items: center;
+    gap:0.5rem;
+}
+.info>div:nth-child(2){
+    display: flex;
+    gap: 0.5rem;
+}
+.info>div:nth-child(2) span{
+    cursor: pointer;
+}
+.creatorImg{
+    height:3rem;
+    width: 3rem;
+    border-radius: 50%;
+}

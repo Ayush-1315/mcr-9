@@ -1,0 +1,21 @@
+.home{
+    text-align: left;
+}
+.categoryContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.categoryCard{
+    cursor: pointer;
+    font-weight: bolder;
+    text-align: left;
+    color: #000000;
+    text-decoration: none;
+}
+.categoryCard img{
+    height: 8rem;
+    display: block;
+    width: 15rem;
+    margin: 0.5rem 0;
+}
