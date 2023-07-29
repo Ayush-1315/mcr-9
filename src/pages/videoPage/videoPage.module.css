@@ -52,3 +52,11 @@
     height: 1.5rem;
     cursor: pointer;
 }
+.note{
+    display: flex;
+    justify-content: space-between;
+}
+.note span{
+    cursor: pointer;
+    margin: 0 0.5rem;
+}

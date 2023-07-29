@@ -1,8 +1,12 @@
 import { useNavigate, useParams } from "react-router";
+import { v4 as uuid } from "uuid";
 import { useData } from "../../context/dataContext";
 import css from "./videoPage.module.css";
 import creator from "../../assets/creator.jpg";
 import clock from "../../assets/clock.svg";
+import { Modal } from "../../components/modal/modal";
+import { useState } from "react";
+import { NoteForm } from "../../components/noteForm/noteForm";
 export const VideoPage = () => {
   const { videoId } = useParams();
   const navigate = useNavigate();
@@ -10,8 +14,12 @@ export const VideoPage = () => {
     dataState: { allVideos },
     watchLaterState,
     dispatchWatchLater,
+    dispatchNotes,
+    notesState,
   } = useData();
-
+  const [addNotes, setAddNotes] = useState(false);
+  const [initialData,setInitialData]=useState(null)
+  const closeNotesModal = () => setAddNotes(false);
   const currentVideo = allVideos?.find(({ _id }) => _id === Number(videoId));
   const clickHandler = (id) => navigate(`/video/${id}`);
   const isWatchLater =
@@ -21,6 +29,28 @@ export const VideoPage = () => {
       ? dispatchWatchLater({ type: "REMOVE", payload: currentVideo._id })
       : dispatchWatchLater({ type: "ADD", payload: currentVideo });
   };
+  const onSubmit = (data) => {
+    if (data.trim !== "") {
+      dispatchNotes({
+        type: "ADD",
+        payload: { _id: currentVideo?._id, notes: { nID: uuid(), note: data } },
+      });
+      setAddNotes(false);
+    }
+  };
+  const onUpdate=data=>{
+    if(data.trim!==""){
+      dispatchNotes({
+        type:"UPDATE",
+        payload:{_id:currentVideo?._id,nID:initialData,note:data},
+      })
+      setAddNotes(false);
+      setInitialData(null);
+    }
+  }
+  const currentVideoNotes = notesState?.find(
+    ({ _id }) => _id === currentVideo?._id
+  );
   return (
     <div className={css.container}>
       <div className={css.main}>
@@ -46,13 +76,27 @@ export const VideoPage = () => {
               )}
             </span>
             <span className="material-symbols-outlined">playlist_add</span>
-            <span className="material-symbols-outlined">
+            <span
+              className="material-symbols-outlined"
+              onClick={() => setAddNotes(true)}
+            >
               tv_options_edit_channels
             </span>
           </div>
         </div>
         <div>
           <h2>My Notes</h2>
+          <div>
+            {currentVideoNotes?.notes?.map((note) => (
+              <div className={css.note}  key={note?.nID}>
+                <p>{note?.note}</p>
+                <div>
+                  <span className="material-symbols-outlined"onClick={()=>{setAddNotes(true);setInitialData(note?.nID)}}>edit</span>
+                  <span className="material-symbols-outlined" onClick={()=>dispatchNotes({type:"DELETE",payload:{_id:currentVideo._id,nID:note?.nID}})}>delete</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className={css.suggestions}>
@@ -71,6 +115,12 @@ export const VideoPage = () => {
           </div>
         ))}
       </div>
+      {addNotes && (
+        <Modal
+          onClose={() => closeNotesModal()}
+          component={<NoteForm submitFun={onSubmit} initialData={initialData} onUpdate={onUpdate}/>}
+        />
+      )}
     </div>
   );
 };
